@@ -13,8 +13,8 @@ Laboratorios y proyecto del curso, usando principalmente [PostgreSQL](https://ww
 - [Lab 7](Laboratorios/Lab_7): Índices
 - [Lab 8](Laboratorios/Lab_8): Evaluación de consultas
 - [Lab 9](Laboratorios/Lab_9): Transacciones
-- [Lab 10](Laboratorios/Lab_10): Privacidad
-- [Lab 11](Laboratorios/Lab_11): NoSQL (MongoDB)
+- [Lab 10](Laboratorios/Lab_10/Resolucion_Lab_10.ipynb): Privacidad
+- [Lab 11](Laboratorios/Lab_11/Resolucion_Lab_11.ipynb): NoSQL (MongoDB)
 
 ## Proyecto semestral: Recomendador de animes
 
