@@ -1,0 +1,131 @@
+Laboratorio 5
+Nombre grupo: FAC
+Integrantes:
+- Alexander Sacchetti
+- Andrés Calderón
+- Felipe Fierro
+
+P1)
+CREATE TABLE FAC_Character(
+	id SERIAL,
+	name VARCHAR(100),
+	CONSTRAINT unique_id PRIMARY KEY (id)
+);
+
+CREATE TABLE FAC_Superheroe(
+	id INT,
+	name VARCHAR(100),
+	intelligence INT,
+	strength INT,
+	speed INT,
+	FOREIGN KEY (id) REFERENCES FAC_Character (id),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE FAC_Relation(
+	id SERIAL,
+	name VARCHAR(100),
+	CONSTRAINT unique_id_rel PRIMARY KEY (id)
+);
+
+CREATE TABLE FAC_Alterego(
+	id SERIAL,
+	name VARCHAR(100),
+	CONSTRAINT unique_id_alter PRIMARY KEY (id)
+);
+
+CREATE TABLE FAC_WorkOcupation(
+	id SERIAL,
+	name VARCHAR(100),
+	CONSTRAINT unique_id_wo PRIMARY KEY (id)
+);
+
+CREATE TABLE FAC_Superheroe_Alterego(
+	id_sh INT,
+	id_alter INT,
+	FOREIGN KEY (id_sh) REFERENCES FAC_Superheroe (id),
+	FOREIGN KEY (id_alter) REFERENCES FAC_Alterego (id),
+	PRIMARY KEY (id_sh, id_alter)
+);
+
+CREATE TABLE FAC_Superheroe_WorkOcupation(
+	id_sh INT,
+	id_wo INT,
+	FOREIGN KEY (id_sh) REFERENCES FAC_Superheroe (id),
+	FOREIGN KEY (id_wo) REFERENCES FAC_WorkOcupation (id),
+	PRIMARY KEY (id_sh, id_wo)
+);
+
+CREATE TABLE FAC_Character_Superheroe_Relation(
+	id_ch1 INT,
+	id_ch2 INT,
+	id_rel INT,
+	FOREIGN KEY (id_ch1) REFERENCES FAC_Character (id),
+	FOREIGN KEY (id_ch2) REFERENCES FAC_Character (id),
+	FOREIGN KEY (id_rel) REFERENCES FAC_Relation (id),
+	PRIMARY KEY (id_ch1, id_ch2, id_rel)
+);
+
+P3)
+(a)
+SELECT name
+FROM FAC_Superheroe
+WHERE id IN
+( SELECT id_ch1
+  FROM FAC_Character_Superheroe_Relation
+  GROUP BY (id_ch1)
+  ORDER BY COUNT(id_ch1) DESC
+  LIMIT 3
+);
+
+(b)
+SELECT name
+FROM FAC_Character
+WHERE id IN
+( SELECT id_ch2
+  FROM FAC_Character_Superheroe_Relation
+  GROUP BY (id_ch2)
+  HAVING id_ch2 NOT IN
+    ( SELECT id
+      FROM FAC_Superheroe
+    )
+  ORDER BY COUNT(id_ch2) DESC
+  LIMIT 3
+);
+
+(c)
+SELECT name
+FROM FAC_Superheroe
+WHERE id IN
+( SELECT id_ch2
+  FROM FAC_Character_Superheroe_Relation
+  GROUP BY (id_ch2)
+  HAVING id_ch2 IN
+    ( SELECT id
+      FROM FAC_Superheroe
+    )
+  ORDER BY COUNT(id_ch2) DESC
+  LIMIT 5
+);
+
+(d)
+SELECT name
+FROM FAC_Relation
+WHERE id =
+( SELECT id_rel
+  FROM FAC_Character_Superheroe_Relation
+  GROUP BY (id_rel)
+  ORDER BY COUNT(id_rel) DESC
+  LIMIT 1
+);
+
+(e)
+SELECT name
+FROM FAC_WorkOcupation
+WHERE id IN
+( SELECT id_wo
+  FROM FAC_Superheroe_WorkOcupation
+  GROUP BY (id_wo)
+  ORDER BY COUNT(id_wo) DESC
+  LIMIT 3
+);

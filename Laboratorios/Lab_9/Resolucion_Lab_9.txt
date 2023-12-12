@@ -1,0 +1,201 @@
+Laboratorio 9
+Nombre de grupo: fac
+Integrantes:
+- Alexander Sacchetti
+- Andrés Calderón
+- Felipe Fierro
+
+P1)
+
+CREATE TABLE trx_p.fac_estado (
+    	nombre varchar (255),
+    	voto_electoral smallint,
+	cierre time,
+	num_candidatos smallint,
+	PRIMARY KEY (nombre)
+);
+
+INSERT INTO fac_estado SELECT * FROM estado;
+
+CREATE TABLE trx_p.fac_condado (
+    	nombre varchar (255),
+	estado varchar (255),
+	reportado float CHECK (reportado BETWEEN 0 AND 1),
+	PRIMARY KEY (nombre, estado),
+	FOREIGN KEY (estado) REFERENCES fac_estado(nombre)
+);
+
+INSERT INTO fac_condado SELECT * FROM condado;
+
+CREATE TABLE trx_p.fac_candidato (
+    	nombre varchar (255),
+	partido varchar (255),
+	PRIMARY KEY (nombre)
+);
+
+INSERT INTO fac_candidato SELECT * FROM candidato;
+
+CREATE TABLE trx_p.fac_votosPorCondado (
+    	candidato varchar (255),
+	condado varchar (255),
+	estado varchar (255),
+    	votos int,
+	PRIMARY KEY (candidato, condado, estado),
+	FOREIGN KEY (candidato) REFERENCES fac_candidato(nombre),
+	FOREIGN KEY (condado, estado) REFERENCES fac_condado(nombre, estado)
+);
+
+INSERT INTO fac_votosPorCondado SELECT * FROM votosPorCondado;
+
+P2)
+
+UPDATE fac_votosPorCondado fac
+	SET votos = v.votos
+	FROM votosPorCondado1 v
+	WHERE fac.candidato = v.candidato
+	AND fac.condado = v.condado
+	AND fac.estado = v.estado;
+
+P3)
+
+UPDATE fac_condado fac
+	SET reportado = c.reportado
+	FROM condado1 c
+	WHERE fac.nombre = c.nombre
+	AND fac.estado = c.estado;
+
+P4)
+
+START TRANSACTION;
+	UPDATE fac_votosPorCondado fac
+		SET votos = v.votos
+		FROM votosPorCondado2 v
+		WHERE fac.candidato = v.candidato
+		AND fac.condado = v.condado
+		AND fac.estado = v.estado;
+	UPDATE fac_condado fac
+		SET reportado = c.reportado
+		FROM condado2 c
+		WHERE fac.nombre = c.nombre
+		AND fac.estado = c.estado;
+COMMIT;
+
+P5)
+
+START TRANSACTION;
+	UPDATE fac_votosPorCondado fac
+		SET votos = v.votos
+		FROM votosPorCondado3 v
+		WHERE fac.candidato = v.candidato
+		AND fac.condado = v.condado
+		AND fac.estado = v.estado;
+	UPDATE fac_condado fac
+		SET reportado = c.reportado
+		FROM condado3 c
+		WHERE fac.nombre = c.nombre
+		AND fac.estado = c.estado;
+COMMIT;
+
+START TRANSACTION;
+	UPDATE fac_votosPorCondado fac
+		SET votos = v.votos
+		FROM votosPorCondado4 v
+		WHERE fac.candidato = v.candidato
+		AND fac.condado = v.condado
+		AND fac.estado = v.estado;
+	UPDATE fac_condado fac
+		SET reportado = c.reportado
+		FROM condado4 c
+		WHERE fac.nombre = c.nombre
+		AND fac.estado = c.estado;
+COMMIT;
+
+START TRANSACTION;
+	UPDATE fac_votosPorCondado fac
+		SET votos = v.votos
+		FROM votosPorCondado5 v
+		WHERE fac.candidato = v.candidato
+		AND fac.condado = v.condado
+		AND fac.estado = v.estado;
+	UPDATE fac_condado fac
+		SET reportado = c.reportado
+		FROM condado5 c
+		WHERE fac.nombre = c.nombre
+		AND fac.estado = c.estado;
+COMMIT;
+
+START TRANSACTION;
+	UPDATE fac_votosPorCondado fac
+		SET votos = v.votos
+		FROM votosPorCondado6 v
+		WHERE fac.candidato = v.candidato
+		AND fac.condado = v.condado
+		AND fac.estado = v.estado;
+	UPDATE fac_condado fac
+		SET reportado = c.reportado
+		FROM condado6 c
+		WHERE fac.nombre = c.nombre
+		AND fac.estado = c.estado;
+COMMIT;
+
+START TRANSACTION;
+	UPDATE fac_votosPorCondado fac
+		SET votos = v.votos
+		FROM votosPorCondado7 v
+		WHERE fac.candidato = v.candidato
+		AND fac.condado = v.condado
+		AND fac.estado = v.estado;
+	UPDATE fac_condado fac
+		SET reportado = c.reportado
+		FROM condado7 c
+		WHERE fac.nombre = c.nombre
+		AND fac.estado = c.estado;
+COMMIT;
+
+START TRANSACTION;
+	UPDATE fac_votosPorCondado fac
+		SET votos = v.votos
+		FROM votosPorCondado8 v
+		WHERE fac.candidato = v.candidato
+		AND fac.condado = v.condado
+		AND fac.estado = v.estado;
+	UPDATE fac_condado fac
+		SET reportado = c.reportado
+		FROM condado8 c
+		WHERE fac.nombre = c.nombre
+		AND fac.estado = c.estado;
+COMMIT;
+
+START TRANSACTION;
+	UPDATE fac_votosPorCondado fac
+		SET votos = v.votos
+		FROM votosPorCondado9 v
+		WHERE fac.candidato = v.candidato
+		AND fac.condado = v.condado
+		AND fac.estado = v.estado;
+	UPDATE fac_condado fac
+		SET reportado = c.reportado
+		FROM condado9 c
+		WHERE fac.nombre = c.nombre
+		AND fac.estado = c.estado;
+COMMIT;
+
+P6)
+
+START TRANSACTION;
+	UPDATE fac_votosPorCondado fac
+		SET votos = v.votos
+		FROM votosPorCondadoX v
+		WHERE fac.candidato = v.candidato
+		AND fac.condado = v.condado
+		AND fac.estado = v.estado;
+	UPDATE fac_condado fac
+		SET reportado = c.reportado
+		FROM condadoX c
+		WHERE fac.nombre = c.nombre
+		AND fac.estado = c.estado;
+COMMIT;
+
+SELECT * FROM votosPorCondadoX;
+
+Putin queria agregarle novecientos noventa y nueve millones novecientos noventa y nueve mil novecientos noventa y nueve (999.999.999) votos a Hillary Clinton, pero no lo lograron por la restricción de que reportados debiese estar entre 0 y 1.

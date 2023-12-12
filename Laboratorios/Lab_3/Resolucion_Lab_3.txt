@@ -1,0 +1,110 @@
+--- Laboratorio 3 ---
+
+Integrantes:
+- Alexander Sacchetti
+- Andrés Calderón
+- Felipe Fierro
+
+P1)
+SELECT *
+FROM pelicula
+WHERE anho BETWEEN 1980 AND 1989
+ORDER BY calificacion DESC;
+
+P2)
+SELECT personaje
+FROM personaje
+WHERE a_nombre = 'DiCaprio, Leonardo'
+ORDER BY p_anho;
+
+P3)
+SELECT nombre, anho, calificacion
+FROM personaje
+JOIN pelicula
+ON p_nombre = nombre
+AND p_anho = anho
+WHERE a_nombre = 'Pitt, Brad'
+ORDER BY calificacion DESC;
+
+P4)
+SELECT DISTINCT personaje
+FROM personaje
+JOIN actor
+ON a_nombre = nombre
+JOIN pelicula P
+ON p_nombre = P.nombre
+AND anho = p_anho
+WHERE p_anho BETWEEN 1990 AND 1999
+AND P.calificacion >= 8.5
+AND genero = 'F';
+
+P5)
+SELECT *
+FROM pelicula
+WHERE nombre LIKE 'The Lord of the Rings%'
+ORDER BY calificacion, anho;
+
+P6)
+SELECT DISTINCT p1.a_nombre
+FROM personaje p1
+JOIN personaje p2
+ON p1.a_nombre = p2.a_nombre
+AND p1.p_nombre = p2.p_nombre
+AND p1.p_anho = p2.p_anho
+WHERE p1.personaje != p2.personaje;
+
+P7)
+SELECT DISTINCT nombre, anho, calificacion
+FROM personaje p1
+JOIN personaje p2
+ON p1.p_nombre = p2.p_nombre
+AND p1.p_anho = p2.p_anho
+JOIN pelicula
+ON p1.p_nombre = nombre
+AND p1.p_anho = anho
+WHERE p1.a_nombre = 'Thurman, Uma'
+AND p2.a_nombre = 'Jackson, Samuel L.';
+
+P8)
+SELECT p1.nombre, p1.anho, p1.calificacion
+FROM pelicula p1
+JOIN personaje p2
+ON p1.nombre = p2.p_nombre
+AND p1.anho = p2.p_anho
+WHERE p2.a_nombre = 'Thurman, Uma'
+EXCEPT
+SELECT nombre, anho, calificacion
+FROM personaje p1
+JOIN personaje p2
+ON p1.p_nombre = p2.p_nombre 
+AND p1.p_anho = p2.p_anho
+JOIN pelicula
+ON p1.p_nombre = nombre
+AND p1.p_anho = anho 
+WHERE p1.a_nombre = 'Thurman, Uma'
+AND p2.a_nombre = 'Jackson, Samuel L.';
+
+P9)
+SELECT DISTINCT p1.a_nombre, p2.a_nombre
+FROM personaje p1
+JOIN personaje p2
+ON p1.a_nombre != p2.a_nombre
+JOIN personaje p3
+ON p1.a_nombre = p3.a_nombre
+JOIN personaje p4
+ON p2.a_nombre = p4.a_nombre
+WHERE p1.p_nombre = p2.p_nombre
+AND p1.p_anho = p2.p_anho
+AND p3.p_nombre = p4.p_nombre
+AND p3.p_anho = p4.p_anho
+AND (p1.p_nombre != p3.p_nombre OR p1.p_anho != p3.p_anho)
+AND p1.a_nombre < p2.a_nombre;
+
+P10)
+SELECT *
+FROM pelicula
+EXCEPT
+SELECT p1.nombre, p1.anho, p1.calificacion
+FROM pelicula p1
+JOIN pelicula p2
+ON p1.calificacion < p2.calificacion;

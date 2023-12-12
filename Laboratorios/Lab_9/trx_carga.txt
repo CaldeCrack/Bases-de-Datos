@@ -1,0 +1,32 @@
+CREATE TABLE trx_p.GGGGG_estado (
+    nombre varchar (255),
+	voto_electoral smallint,
+	cierre time,
+	num_candidatos smallint
+);
+
+INSERT INTO GGGGG_estado SELECT * FROM estado;
+
+CREATE TABLE trx_p.GGGGG_condado (
+    nombre varchar (255),
+	estado varchar (255),
+	reportado float
+);
+
+INSERT INTO GGGGG_condado SELECT * FROM condado;
+
+CREATE TABLE trx_p.GGGGG_candidato (
+    nombre varchar (255),
+	partido varchar (255)
+);
+
+INSERT INTO GGGGG_candidato SELECT * FROM candidato;
+
+CREATE TABLE trx_p.GGGGG_votosPorCondado (
+    candidato varchar (255),
+	condado varchar (255),
+	estado varchar (255),
+    votos int
+);
+
+INSERT INTO GGGGG_votosPorCondado SELECT * FROM votosPorCondado;

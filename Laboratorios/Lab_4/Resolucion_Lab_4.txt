@@ -1,0 +1,77 @@
+Laboratorio 4
+Integrantes:
+- Alexander Sacchetti
+- Andrés Calderón
+- Felipe Fierro
+
+P1)
+SELECT COUNT(*)
+FROM pelicula;
+
+P2)
+SELECT COUNT(DISTINCT anho)
+FROM pelicula;
+
+P3)
+SELECT *
+FROM pelicula
+ORDER BY calificacion DESC, nombre, anho
+FETCH FIRST 10 ROWS ONLY;
+
+P4)
+SELECT DISTINCT a_nombre
+FROM personaje
+WHERE (p_nombre, p_anho) IN
+( SELECT nombre, anho
+  FROM pelicula
+  ORDER BY calificacion DESC, nombre, anho
+  FETCH FIRST 10 ROWS ONLY
+);
+
+P5)
+SELECT DISTINCT nombre
+FROM actor
+WHERE genero = 'F' AND nombre IN
+( SELECT DISTINCT a_nombre
+  FROM personaje
+  WHERE (p_nombre, p_anho) IN
+  ( SELECT nombre, anho
+    FROM pelicula
+    ORDER BY calificacion DESC, nombre, anho
+    FETCH FIRST 10 ROWS ONLY
+  )
+);
+
+P6)
+SELECT DISTINCT p_anho - (p_anho % 10) AS decada
+FROM personaje
+WHERE a_nombre = 'Buscemi, Steve';
+
+P7)
+SELECT anho, COUNT(*)
+FROM pelicula
+GROUP BY anho;
+
+P8)
+SELECT anho, COUNT(*)
+FROM pelicula
+GROUP BY anho
+HAVING COUNT(*) > 1
+ORDER BY COUNT(*) DESC;
+
+P9)
+SELECT a_nombre, COUNT(DISTINCT (p_nombre, p_anho))
+FROM personaje
+WHERE (p_nombre, p_anho) IN
+( SELECT nombre, anho
+  FROM pelicula
+  WHERE calificacion >= 8.6
+)
+GROUP BY a_nombre
+ORDER BY COUNT(DISTINCT (p_nombre, p_anho)) DESC;
+
+P10)
+SELECT DISTINCT p_nombre, p_anho, COUNT(genero)
+FROM personaje LEFT JOIN actor
+ON nombre = a_nombre AND (genero = 'F' OR genero IS NULL)
+GROUP BY (p_nombre, p_anho);
