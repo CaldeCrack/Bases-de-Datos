@@ -18,5 +18,5 @@ Laboratorios y proyecto del curso, usando principalmente [PostgreSQL](https://ww
 
 ## Proyecto semestral: Recomendador de animes
 
-[Página web](https://grupo37.cc3201.dcc.uchile.cl) en la que el usuario elige una película de [IMDb](https://www.imdb.com)
+[Página web](https://grupo37.cc3201.dcc.uchile.cl) hecha con [php](https://www.php.net) en la que el usuario elige una película de [IMDb](https://www.imdb.com)
 y se le recomiendan animes registrados en [MyAnimeList](http://myanimelist.net) en base a la elección realizada.
